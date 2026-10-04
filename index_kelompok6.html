@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kriptografi - Kelompok 6</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#eef3f8;color:#26343d}
+.topbar{height:72px;background:linear-gradient(135deg,#16a9d8,#2879d1);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:10}
+.brand{font-size:27px;font-weight:800;letter-spacing:.3px}
+.badge{background:rgba(255,255,255,.16);padding:11px 22px;border-radius:28px;font-weight:700}
+.layout{display:flex;min-height:calc(100vh - 72px)}
+.sidebar{width:270px;background:#182832;color:#fff;padding:22px 18px;flex-shrink:0}
+.side-title{font-size:18px;font-weight:800;margin-bottom:18px}
+.nav button{width:100%;border:0;background:transparent;color:#dbe5ea;text-align:left;padding:14px 15px;border-radius:10px;margin-bottom:7px;font-size:16px;cursor:pointer}
+.nav button:hover,.nav button.active{background:#263f4d}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:10px}
+.red{background:#f04f49}.orange{background:#f39a18}.green{background:#28ad68}
+.members{margin-top:30px;padding-top:20px;border-top:1px solid #3a4b55}
+.members h3{font-size:15px;margin:0 0 12px;color:#fff}
+.member{background:#213944;border-radius:10px;padding:10px 11px;margin:8px 0}
+.member strong{display:block;font-size:13px}
+.member span{font-size:12px;color:#b9c9d1}
+.main{flex:1;padding:28px;min-width:0}
+.page-title{font-size:32px;margin:0 0 6px}
+.subtitle{color:#71808a;font-size:18px;margin:0 0 25px}
+.card{background:#fff;border-radius:14px;box-shadow:0 6px 22px rgba(35,57,70,.10);margin-bottom:22px;overflow:hidden;border-top:5px solid #18a9d4}
+.card-head{padding:20px 26px;border-bottom:1px solid #e6ecef;font-size:22px;font-weight:800}
+.card-body{padding:24px 26px}
+label{display:block;font-weight:700;font-size:18px;margin:0 0 9px}
+textarea,input{width:100%;border:1px solid #ccd6dc;border-radius:9px;padding:14px 16px;font-size:17px;outline:none}
+textarea{min-height:125px;resize:vertical}
+textarea:focus,input:focus{border-color:#18a9d4;box-shadow:0 0 0 3px rgba(24,169,212,.12)}
+.field{margin-bottom:20px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:0;border-radius:9px;padding:14px 20px;font-size:15px;font-weight:800;cursor:pointer}
+.primary{background:#15a9d7;color:#fff}.secondary{background:#e9eef2;color:#42545e}.success{background:#25a96b;color:#fff}
+.result{background:#f5f9fb;border:1px solid #dce7ed;border-radius:9px;padding:18px;font-size:23px;font-weight:800;word-break:break-all;min-height:60px}
+.table-wrap{overflow:auto;border:1px solid #d9e2e7;border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:760px;background:#fff}
+th,td{border:1px solid #dbe3e8;padding:14px;text-align:center;font-size:17px}
+thead th{background:#edf3f7;font-weight:800}
+tbody th{background:#edf3f7;text-align:left;padding-left:18px}
+.hidden{display:none}
+.note{color:#71808a;font-size:13px;margin-top:12px}
+.mobile-members{display:none}
+@media(max-width:800px){
+ .topbar{padding:0 18px}.brand{font-size:23px}.badge{padding:9px 15px}
+ .layout{display:block}.sidebar{width:100%;padding:14px 15px}
+ .side-title{display:none}.nav{display:flex;gap:7px;overflow-x:auto}.nav button{white-space:nowrap;width:auto;margin:0}
+ .members{display:block;margin-top:14px;padding-top:14px}
+ .members h3{margin-bottom:8px}
+ .member-list{display:grid;grid-template-columns:1fr;gap:7px}
+ .member{margin:0;padding:9px 10px}
+ .main{padding:20px 14px}.page-title{font-size:30px}.subtitle{font-size:17px}
+ .card-head{padding:17px 18px}.card-body{padding:20px 18px}
+ .actions .btn{flex:1;min-width:130px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Kriptografi</div>
+  <div class="badge">KELOMPOK 6</div>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+  <div class="side-title">MENU</div>
+  <div class="nav">
+    <button id="navEncrypt" class="active" onclick="showPage('encrypt')"><span class="dot red"></span>ENKRIPSI</button>
+    <button id="navDecrypt" onclick="showPage('decrypt')"><span class="dot orange"></span>DEKRIPSI</button>
+    <button id="navTable" onclick="showPage('table')"><span class="dot green"></span>TABEL ANGKA</button>
+  </div>
+
+  <section class="members">
+    <h3>ANGGOTA KELOMPOK 6</h3>
+    <div class="member-list">
+      <div class="member"><strong>Muhammad Hidayatullah</strong><span>25010131</span></div>
+      <div class="member"><strong>M. Abel Rahmadan</strong><span>25010044</span></div>
+      <div class="member"><strong>M. Raffi Fadhil F</strong><span>25010120</span></div>
+    </div>
+  </section>
+</aside>
+
+<main class="main">
+  <section id="encryptPage">
+    <h1 class="page-title">Enkripsi</h1>
+    <p class="subtitle">Masukkan plaintext dan key untuk menghasilkan ciphertext.</p>
+    <div class="card">
+      <div class="card-head">Form Enkripsi</div>
+      <div class="card-body">
+        <div class="field"><label for="plain">Plaintext</label><textarea id="plain" placeholder="Masukkan plaintext..."></textarea></div>
+        <div class="field"><label for="ekey">Key / Kunci</label><input id="ekey" placeholder="Masukkan key..."></div>
+        <div class="actions">
+          <button class="btn primary" onclick="encrypt()">PROSES ENKRIPSI</button>
+          <button class="btn secondary" onclick="resetEncrypt()">REFRESH</button>
+          <button class="btn secondary" onclick="showPage('table')">LIHAT TABEL ANGKA</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Hasil Enkripsi</div>
+      <div class="card-body"><div class="result" id="encResult">Ciphertext akan tampil di sini.</div></div>
+    </div>
+  </section>
+
+  <section id="decryptPage" class="hidden">
+    <h1 class="page-title">Dekripsi</h1>
+    <p class="subtitle">Masukkan ciphertext dan key untuk mendapatkan plaintext.</p>
+    <div class="card">
+      <div class="card-head">Form Dekripsi</div>
+      <div class="card-body">
+        <div class="field"><label for="cipher">Ciphertext</label><textarea id="cipher" placeholder="Masukkan ciphertext..."></textarea></div>
+        <div class="field"><label for="dkey">Key / Kunci</label><input id="dkey" placeholder="Masukkan key..."></div>
+        <div class="actions">
+          <button class="btn primary" onclick="decrypt()">PROSES DEKRIPSI</button>
+          <button class="btn secondary" onclick="resetDecrypt()">REFRESH</button>
+          <button class="btn secondary" onclick="showPage('table')">LIHAT TABEL ANGKA</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Hasil Dekripsi</div>
+      <div class="card-body"><div class="result" id="decResult">Plaintext akan tampil di sini.</div></div>
+    </div>
+  </section>
+
+  <section id="tablePage" class="hidden">
+    <h1 class="page-title">Tabel Angka</h1>
+    <p class="subtitle">Perhitungan Vigenère ditampilkan terpisah seperti tabel contoh.</p>
+    <div class="card">
+      <div class="card-head">Detail Perhitungan</div>
+      <div class="card-body">
+        <div class="table-wrap">
+          <table id="calcTable">
+            <thead><tr><th>Data</th><th>1</th><th>2</th><th>3</th></tr></thead>
+            <tbody><tr><th>Plaintext</th><td colspan="3">Belum ada data</td></tr></tbody>
+          </table>
+        </div>
+        <p class="note">A = 0, B = 1, C = 2, ..., Z = 25. Spasi dan karakter selain huruf tidak dihitung.</p>
+      </div>
+    </div>
+  </section>
+</main>
+</div>
+
+<script>
+let lastCalc=null;
+function clean(s){return (s||'').toUpperCase().replace(/[^A-Z]/g,'')}
+function n(c){return c.charCodeAt(0)-65}
+function l(x){return String.fromCharCode(((x%26)+26)%26+65)}
+function showPage(p){
+ ['encrypt','decrypt','table'].forEach(x=>{
+  document.getElementById(x+'Page').classList.toggle('hidden',x!==p);
+  document.getElementById('nav'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('active',x===p);
+ });
+}
+function buildCalc(text,key,mode){
+ let t=clean(text), k=clean(key), rows={text:[],key:[],a:[],b:[],op:[],mod:[],res:[]}, out='';
+ if(!t||!k){alert('Masukkan data dan key terlebih dahulu.');return null}
+ for(let i=0;i<t.length;i++){
+  let a=n(t[i]), b=n(k[i%k.length]), op=mode==='encrypt'?a+b:a-b, m=((op%26)+26)%26, r=l(m);
+  out+=r; rows.text.push(t[i]); rows.key.push(k[i%k.length]); rows.a.push(a); rows.b.push(b); rows.op.push(op); rows.mod.push(m); rows.res.push(r);
+ }
+ lastCalc={mode,rows,out}; renderTable(); return out;
+}
+function encrypt(){
+ let r=buildCalc(document.getElementById('plain').value,document.getElementById('ekey').value,'encrypt');
+ if(r) document.getElementById('encResult').textContent=r;
+}
+function decrypt(){
+ let r=buildCalc(document.getElementById('cipher').value,document.getElementById('dkey').value,'decrypt');
+ if(r) document.getElementById('decResult').textContent=r;
+}
+function renderTable(){
+ if(!lastCalc)return;
+ const r=lastCalc.rows, m=lastCalc.mode, labels=m==='encrypt'?
+ ['Plaintext','Key','P (angka)','K (angka)','P + K','mod 26','Ciphertext']:
+ ['Ciphertext','Key','C (angka)','K (angka)','C - K','mod 26','Plaintext'];
+ const data=[r.text,r.key,r.a,r.b,r.op,r.mod,r.res];
+ let h='<thead><tr><th>Data</th>';
+ for(let i=0;i<r.text.length;i++)h+='<th>'+(i+1)+'</th>';
+ h+='</tr></thead><tbody>';
+ for(let j=0;j<data.length;j++){h+='<tr><th>'+labels[j]+'</th>';for(const v of data[j])h+='<td>'+v+'</td>';h+='</tr>'}
+ h+='</tbody>'; document.getElementById('calcTable').innerHTML=h;
+}
+function resetEncrypt(){document.getElementById('plain').value='';document.getElementById('ekey').value='';document.getElementById('encResult').textContent='Ciphertext akan tampil di sini.'}
+function resetDecrypt(){document.getElementById('cipher').value='';document.getElementById('dkey').value='';document.getElementById('decResult').textContent='Plaintext akan tampil di sini.'}
+</script>
+</body>
+</html>
